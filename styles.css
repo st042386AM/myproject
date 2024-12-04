@@ -1,0 +1,121 @@
+/* 全体のスタイル */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+/* ヘッダー */
+header {
+    background: #0078D7;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+/* ナビゲーションバー */
+nav {
+    background: #f4f4f4;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 2px solid #0078D7;
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #0078D7;
+}
+
+/* メインセクション */
+main {
+    padding: 20px;
+}
+
+/* 各セクション */
+section {
+    margin-bottom: 30px;
+}
+
+/* 投稿フォーム */
+form {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input, form textarea, form button {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+form textarea {
+    height: 100px;
+}
+
+/* 投稿ボタン */
+form button {
+    background-color: #0078D7;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #0056a3;
+}
+
+/* 投稿記事 */
+article {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+article h4 {
+    margin-top: 0;
+    color: #0078D7;
+}
+
+article p {
+    margin: 5px 0;
+}
+
+/* フッター */
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
