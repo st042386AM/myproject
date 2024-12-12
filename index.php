@@ -40,12 +40,20 @@ $organizedPosts = array_reverse($organizedPosts);
     <h1>掲示板</h1>
 
     <nav>
+        <a href="#home">ホーム</a>
         <a href="#search">検索</a>
         <a href="#news">新着情報</a>
 	    <a href="#post">投稿</a>
         <a href="#contact">お問い合わせ</a>
 	    <a href="#view">投稿一覧</a>
     </nav>
+
+     <!-- ホームセクション -->
+     <section id="home">
+            <h2>ようこそ</h2>
+            <p>こちらは掲示板システムです。情報の投稿、検索、新着情報の確認、お問い合わせが可能です。</p>
+        </section>
+
 
     <!-- 検索フォーム -->
      <section id="search">
