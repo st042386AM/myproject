@@ -8,9 +8,10 @@ require 'functions.php';
 $keyword = $_GET['search'] ?? '';
 $selectedGenre = $_GET['genre'] ?? '';
 
-// 検索機能の処理
-$searchTerm = $_GET['searc/h'] ?? '';
-$news = getNews($pdo, $searchTerm);
+// 新着情報を取得
+$news = getNews($pdo, $keyword, $selectedGenre);
+
+
 
 // 投稿データの取得
 if (!empty($keyword)) {
@@ -70,7 +71,7 @@ $organizedPosts = organizePosts($posts);
     </section>
 
     <!-- 新着情報表示セクション -->
-    <section>
+    <!-- <section>
         <h2>新着情報</h2>
         <?php if (!empty($news)): ?>
             <ul>
@@ -84,7 +85,37 @@ $organizedPosts = organizePosts($posts);
         <?php else: ?>
             <p>新着情報はありません。</p>
         <?php endif; ?>
-    </section>
+    </section> -->
+
+    
+    <section id="news-list">
+    <h2>新着情報</h2>
+    <form method="GET" action="">
+        <select name="genre" onchange="this.form.submit()">
+            <option value="">全て</option>
+            <option value="一般" <?= $selectedGenre === '一般' ? 'selected' : '' ?>>一般</option>
+            <option value="アニメ" <?= $selectedGenre === 'アニメ' ? 'selected' : '' ?>>アニメ</option>
+            <option value="ゲーム" <?= $selectedGenre === 'ゲーム' ? 'selected' : '' ?>>ゲーム</option>
+            <option value="スポーツ" <?= $selectedGenre === 'スポーツ' ? 'selected' : '' ?>>スポーツ</option>
+        </select>
+    </form>
+
+    <?php if (!empty($news)): ?>
+        <ul>
+            <?php foreach ($news as $item): ?>
+                <li>
+                    <strong><?= htmlspecialchars($item['title']) ?></strong>
+                    <p>ジャンル: <?= htmlspecialchars($item['genre']) ?></p>
+                    <p>投稿日時: <?= htmlspecialchars($item['created_at']) ?></p>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>該当する新着情報はありません。</p>
+    <?php endif; ?>
+</section>
+
+
 
 
     <!-- 新着情報投稿フォーム -->
@@ -155,3 +186,4 @@ $organizedPosts = organizePosts($posts);
 </footer>
 </body>
 </html>
+
