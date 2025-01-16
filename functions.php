@@ -1,7 +1,7 @@
 <?php
 
 // 新着情報を取得する関数
-function getNews($pdo, $searchTerm = '') {
+/*function getNews($pdo, $searchTerm = '') {
     if ($searchTerm) {
         $stmt = $pdo->prepare("SELECT * FROM news WHERE title LIKE :searchTerm ORDER BY created_at DESC");
         $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
@@ -9,7 +9,71 @@ function getNews($pdo, $searchTerm = '') {
         $stmt = $pdo->query("SELECT * FROM news ORDER BY created_at DESC");
     }
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}*/
+
+//修正一回目
+/*function getNews($pdo, $searchTerm = '', $genre = '') {
+    $query = "SELECT * FROM news WHERE 1";
+    $params = [];
+
+    if (!empty($searchTerm)) {
+        $query .= " AND title LIKE :searchTerm";
+        $params['searchTerm'] = '%' . $searchTerm . '%';
+    }
+
+    if (!empty($genre)) {
+        $query .= " AND genre = :genre";
+        $params['genre'] = $genre;
+    }
+
+    $query .= " ORDER BY created_at DESC";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}*/
+
+//修正2回目
+// パラメータ取得
+$keyword = $_GET['search'] ?? '';       // キーワード検索（任意）
+$selectedGenre = $_GET['genre'] ?? '';  // ジャンル選択
+
+// データ取得関数
+function getNews($pdo, $keyword = '', $genre = '') {
+    global $pdo; // データベース接続
+    $sql = 'SELECT * FROM news WHERE 1';
+
+    // キーワード検索条件
+    if (!empty($keyword)) {
+        $sql .= ' AND title LIKE :keyword';
+    }
+
+    // ジャンル絞り込み条件
+    if (!empty($genre)) {
+        $sql .= ' AND genre = :genre';
+    }
+
+    $sql .= ' ORDER BY created_at DESC'; // 日付順で並べる
+
+    $stmt = $pdo->prepare($sql);
+
+    // パラメータをバインド
+    if (!empty($keyword)) {
+        $keyword = '%' . $keyword . '%';
+        $stmt->bindParam(':keyword', $keyword, PDO::PARAM_STR);
+    }
+    if (!empty($genre)) {
+        $stmt->bindParam(':genre', $genre, PDO::PARAM_STR);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // 結果を返す
 }
+
+// 新着情報を取得
+$newsList = getNews($keyword, $selectedGenre);
+
+
 
 
 require 'db.php';
@@ -109,6 +173,7 @@ if (!function_exists('displayPosts')) {
                 <div id="reply-form-<?= $post['id'] ?>" class="reply-form" style="display: none;">
                     <form method="POST" action="reply.php">
                         <input type="hidden" name="parent_id" value="<?= $post['id'] ?>">
+                        <input type="text" name="name" placeholder="名前を入力" required>
                         <textarea name="content" placeholder="返信内容を入力"></textarea>
                         <button type="submit">返信</button>
                     </form>
@@ -140,6 +205,3 @@ if (!function_exists('displayPosts')) {
 
 
 ?>
-
-
-
